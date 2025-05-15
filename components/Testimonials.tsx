@@ -316,7 +316,6 @@ const EnhancedTestimonials = () => {
           </motion.div>
         )}
 
-        {/* Trust indicators */}
         <motion.div 
           style={{ y: parallaxY }}
           className="mt-24"
@@ -325,7 +324,6 @@ const EnhancedTestimonials = () => {
           transition={{ duration: 0.7, delay: 0.5 }}
         >
           <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl shadow-xl p-8 text-center text-white overflow-hidden relative">
-            {/* Background pattern */}
             <div className="absolute inset-0 opacity-10">
               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                 <defs>

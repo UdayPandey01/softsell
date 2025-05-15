@@ -103,7 +103,6 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right side with WobbleCard */}
           <div className="relative">
             <WobbleCard
               containerClassName="col-span-1 min-h-[440px] bg-blue-600"
@@ -155,25 +154,10 @@ const Hero = () => {
                 </button>
               </div>
 
-              {/* Notification pop-up */}
-              {/* <div className="absolute -bottom-4 -left-10 bg-white rounded-lg shadow-lg p-4 transform -rotate-2">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
-                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Valuation Complete</p>
-                    <p className="text-sm text-gray-500">TechFirst recovered $28,450</p>
-                  </div>
-                </div>
-              </div> */}
             </WobbleCard>
           </div>
         </div>
 
-        {/* Additional WobbleCards section */}
         <div className="mt-16 md:mt-24">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <WobbleCard
@@ -223,7 +207,6 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Trusted by logos */}
         <div className="mt-16">
           <p className="text-center text-gray-500 mb-6">
             Trusted by leading companies worldwide

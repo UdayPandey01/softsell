@@ -246,10 +246,8 @@ const WhyChooseUs = () => {
               onMouseEnter={() => setHoveredFeature(feature.id)}
               onMouseLeave={() => setHoveredFeature(null)}
             >
-              {/* Top accent border with gradient */}
               <div className={`h-1 w-full bg-gradient-to-r ${feature.gradient}`}></div>
               
-              {/* Background decoration */}
               <div className={`absolute -right-16 -bottom-16 w-40 h-40 rounded-full transition-all duration-500 bg-gradient-to-br ${
                 hoveredFeature === feature.id ? feature.lightGradient + ' opacity-100 scale-125' : feature.lightGradient + ' opacity-0 scale-100'
               }`}></div>
@@ -339,7 +337,6 @@ const WhyChooseUs = () => {
             )}
           </AnimatePresence>
           
-          {/* Toggle button for expanding */}
           <div className="flex justify-center mb-16">
             <button 
               onClick={() => setIsExpanded(!isExpanded)}
@@ -362,11 +359,9 @@ const WhyChooseUs = () => {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="relative"
         >
-          {/* CTA gradient background with mesh effect */}
           <div className="absolute inset-0 rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-700"></div>
             
-            {/* Mesh gradient overlay */}
             <div className="absolute inset-0 opacity-30">
               <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -378,7 +373,6 @@ const WhyChooseUs = () => {
               </svg>
             </div>
             
-            {/* Glass reflections */}
             <div className="absolute -left-40 -top-40 w-80 h-80 bg-white opacity-10 rounded-full blur-3xl"></div>
             <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-white opacity-10 rounded-full blur-3xl"></div>
           </div>

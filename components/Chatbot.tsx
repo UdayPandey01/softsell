@@ -115,7 +115,6 @@ const Chatbot = () => {
               </div>
               <div>
                 <p className="font-medium">SoftSell Assistant</p>
-                <p className="text-xs text-blue-100">Powered by Gemini</p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)}>

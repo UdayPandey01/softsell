@@ -138,11 +138,9 @@ const Contact = () => {
       
       setIsSubmitting(true);
       
-      // Simulate form submission
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(true);
-        // Reset form
         setFormData({
           name: '',
           email: '',
@@ -156,7 +154,6 @@ const Contact = () => {
       }, 1500);
     };
 
-  // Tips based on focused field
   const getFieldTip = () => {
     switch(focusedField) {
       case 'name':
@@ -289,7 +286,6 @@ const Contact = () => {
                 )}
               </div>
 
-              {/* Progress indicator */}
               <div className="bg-blue-500 h-1 flex">
                 <div className={`h-full bg-blue-300 transition-all duration-300 ${formStep === 1 ? 'w-1/2' : 'w-full'}`}></div>
               </div>
@@ -511,7 +507,6 @@ const Contact = () => {
                   </form>
                 )}
                 
-                {/* Trust indicators */}
                 {!isSubmitted && (
                   <div className="mt-6 pt-6 border-t border-gray-100">
                     <p className="text-center text-gray-500 text-sm mb-3">Trusted by 500+ companies worldwide</p>
