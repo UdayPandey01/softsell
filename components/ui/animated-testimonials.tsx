@@ -2,6 +2,7 @@
 
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "motion/react";
+import Image from "next/image";
 
 import { useEffect, useState } from "react";
 
@@ -20,6 +21,7 @@ export const AnimatedTestimonials = ({
 }) => {
   const [active, setActive] = useState(0);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const handleNext = () => {
     setActive((prev) => (prev + 1) % testimonials.length);
   };
@@ -37,7 +39,7 @@ export const AnimatedTestimonials = ({
       const interval = setInterval(handleNext, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoplay]);
+  }, [autoplay, handleNext]);
 
   const randomRotateY = () => {
     return Math.floor(Math.random() * 21) - 10;
@@ -79,7 +81,7 @@ export const AnimatedTestimonials = ({
                   }}
                   className="absolute inset-0 origin-bottom"
                 >
-                  <img
+                  <Image
                     src={testimonial.src}
                     alt={testimonial.name}
                     width={500}

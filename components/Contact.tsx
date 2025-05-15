@@ -14,12 +14,20 @@ const Contact = () => {
     message: ''
   });
   
-  const [errors, setErrors] = useState({});
+  interface FormErrors {
+    [key: string]: string | undefined;
+    name?: string;
+    email?: string;
+    company?: string;
+    licenseType?: string;
+  }
+  
+  const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formStep, setFormStep] = useState(1);
   const [formIsValid, setFormIsValid] = useState(false);
-  const [focusedField, setFocusedField] = useState(null);
+  const [focusedField, setFocusedField] = useState<FormField>(null);
 
   const licenseTypes = [
     'Enterprise Software',
@@ -34,7 +42,6 @@ const Contact = () => {
     'Other'
   ];
 
-  // Track form validity
   useEffect(() => {
     if (formStep === 1) {
       const step1Valid = formData.name.trim() !== '' && 
@@ -49,7 +56,7 @@ const Contact = () => {
   }, [formData, formStep]);
 
   const validateStep1 = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
     
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
@@ -69,7 +76,7 @@ const Contact = () => {
   };
 
   const validateStep2 = () => {
-    const newErrors = {};
+    const newErrors: FormErrors = {};
     
     if (!formData.licenseType) {
       newErrors.licenseType = 'Please select a license type';
@@ -77,24 +84,24 @@ const Contact = () => {
     
     return newErrors;
   };
-
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
     });
     
-    // Clear error for this field when user starts typing
     if (errors[name]) {
       setErrors({
         ...errors,
-        [name]: null
+        [name]: undefined
       });
     }
   };
 
-  const handleFocus = (field) => {
+  type FormField = 'name' | 'email' | 'company' | 'licenseType' | 'licenseCount' | 'purchaseDate' | 'message' | null;
+
+  const handleFocus = (field: FormField): void => {
     setFocusedField(field);
   };
 
@@ -116,34 +123,38 @@ const Contact = () => {
     setFormStep(1);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    
-    const newErrors = formStep === 1 ? validateStep1() : validateStep2();
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        licenseType: '',
-        licenseCount: '',
-        purchaseDate: '',
-        message: ''
-      });
-      setFormStep(1);
-    }, 1500);
-  };
+  interface FormSubmitEvent {
+    preventDefault: () => void;
+  }
+
+  const handleSubmit = (e: FormSubmitEvent): void => {
+      e.preventDefault();
+      
+      const newErrors: FormErrors = formStep === 1 ? validateStep1() : validateStep2();
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        return;
+      }
+      
+      setIsSubmitting(true);
+      
+      // Simulate form submission
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          licenseType: '',
+          licenseCount: '',
+          purchaseDate: '',
+          message: ''
+        });
+        setFormStep(1);
+      }, 1500);
+    };
 
   // Tips based on focused field
   const getFieldTip = () => {
@@ -298,7 +309,7 @@ const Contact = () => {
                     </div>
                     <h3 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
                     <p className="text-gray-600 mb-6">
-                      Your request has been received. We'll get back to you with a valuation within 24 hours.
+                      Your request has been received. We&apos;ll get back to you with a valuation within 24 hours.
                     </p>
                     <button 
                       onClick={() => setIsSubmitted(false)}
@@ -453,7 +464,7 @@ const Contact = () => {
                                 onChange={handleChange}
                                 onFocus={() => handleFocus('message')}
                                 onBlur={handleBlur}
-                                rows="4"
+                                rows={4}
                                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
                                 placeholder="Tell us about your software licenses (versions, original cost, etc.)"
                               ></textarea>

@@ -13,7 +13,7 @@ const Chatbot = () => {
   ]);
   const [inputMessage, setInputMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const callChatAPI = async (userMessage: string) => {
     setIsLoading(true);
@@ -100,10 +100,8 @@ const Chatbot = () => {
         )}
       </button>
 
-      {/* Chat Window */}
       {isOpen && (
         <div className="fixed z-50 bottom-24 right-6 w-[22rem] max-w-full bg-white rounded-xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
-          {/* Header */}
           <div className="bg-blue-600 text-white px-4 py-3 flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <div className="bg-white text-blue-600 w-8 h-8 rounded-full flex items-center justify-center">
@@ -137,7 +135,6 @@ const Chatbot = () => {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="flex-1 p-4 overflow-y-auto max-h-96">
             <div className="space-y-3">
               {messages.map((message, index) => (
@@ -159,7 +156,6 @@ const Chatbot = () => {
                 </div>
               ))}
 
-              {/* Typing Loader */}
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-gray-100 text-gray-800 rounded-lg px-4 py-2 text-sm flex items-center space-x-1">
@@ -173,7 +169,6 @@ const Chatbot = () => {
             </div>
           </div>
 
-          {/* Input */}
           <form
             onSubmit={handleSendMessage}
             className="border-t border-gray-200 bg-gray-50 px-4 py-3"

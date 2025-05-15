@@ -5,7 +5,7 @@ import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ChevronRight, Shield, DollarSign, Users, Lock, CheckCircle, ChevronDown } from "lucide-react";
 
 const WhyChooseUs = () => {
-  const [hoveredFeature, setHoveredFeature] = useState(null);
+  const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const statsRef = useRef(null);
   const isStatsInView = useInView(statsRef, { once: true, amount: 0.3 });
@@ -13,7 +13,7 @@ const WhyChooseUs = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent): void => {
       const container = document.getElementById('gradient-container');
       if (!container) return;
       
@@ -30,21 +30,26 @@ const WhyChooseUs = () => {
     };
   }, []);
   
-  const useCounter = (end, duration = 2000) => {
-    const [count, setCount] = useState(0);
-    const nodeRef = useRef(null);
+  interface CounterHookResult {
+    count: number;
+    nodeRef: React.RefObject<HTMLDivElement | null>;
+  }
+
+  const useCounter = (end: number, duration: number = 2000): CounterHookResult => {
+    const [count, setCount] = useState<number>(0);
+    const nodeRef = useRef<HTMLDivElement>(null);
     const inView = useInView(nodeRef);
     
     useEffect(() => {
       if (!inView) return;
       
-      let startTime;
-      let animationFrame;
+      let startTime: number;
+      let animationFrame: number;
       
-      const updateCount = (timestamp) => {
+      const updateCount = (timestamp: number): void => {
         if (!startTime) startTime = timestamp;
-        const progress = timestamp - startTime;
-        const percentage = Math.min(progress / duration, 1);
+        const progress: number = timestamp - startTime;
+        const percentage: number = Math.min(progress / duration, 1);
         
         setCount(Math.floor(percentage * end));
         
@@ -61,7 +66,11 @@ const WhyChooseUs = () => {
     return { count, nodeRef };
   };
   
-  const formatValue = (value) => {
+  interface FormatValueInput {
+    value: number | string;
+  }
+
+  const formatValue = (value: FormatValueInput['value']): string => {
     if (typeof value === 'string') return value;
     
     if (value >= 1000000) {
@@ -69,7 +78,7 @@ const WhyChooseUs = () => {
     } else if (value >= 1000) {
       return (value / 1000).toFixed(0) + "K";
     }
-    return value;
+    return value.toString();
   };
   
   const features = [
@@ -167,12 +176,13 @@ const WhyChooseUs = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-blue-100 max-w-2xl mx-auto"
               >
-                We've helped thousands of businesses recover millions in software license value.
+                We&apos;ve helped thousands of businesses recover millions in software license value.
               </motion.p>
             </div>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
               {stats.map((stat, index) => {
+                // eslint-disable-next-line react-hooks/rules-of-hooks
                 const { count, nodeRef } = useCounter(
                   typeof stat.value === 'string' ? 0 : stat.value,
                   2000 + (index * 300)

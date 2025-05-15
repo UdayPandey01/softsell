@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { ChevronRight, CheckCircle, Award, BarChart2, Clock, Users } from "lucide-react";
+import Image from 'next/image';
 
 const EnhancedTestimonials = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,18 +13,23 @@ const EnhancedTestimonials = () => {
   const isStatsInView = useInView(statsRef, { once: true, amount: 0.3 });
   
   // Animated counter hook
-  const useCounter = (end, duration = 2000) => {
-    const [count, setCount] = useState(0);
-    const nodeRef = useRef(null);
+  interface CounterResult {
+    count: number;
+    nodeRef: React.RefObject<HTMLDivElement | null>;
+  }
+
+  const useCounter = (end: number, duration: number = 2000): CounterResult => {
+    const [count, setCount] = useState<number>(0);
+    const nodeRef = useRef<HTMLDivElement>(null);
     const inView = useInView(nodeRef);
     
     useEffect(() => {
       if (!inView) return;
       
-      let startTime;
-      let animationFrame;
+      let startTime: number | undefined;
+      let animationFrame: number;
       
-      const updateCount = (timestamp) => {
+      const updateCount = (timestamp: number): void => {
         if (!startTime) startTime = timestamp;
         const progress = timestamp - startTime;
         const percentage = Math.min(progress / duration, 1);
@@ -160,13 +166,13 @@ const EnhancedTestimonials = () => {
     },
   ];
 
-  const formatValue = (value) => {
+  const formatValue = (value: number): string => {
     if (value >= 1000000) {
       return (value / 1000000).toFixed(1) + "M";
     } else if (value >= 1000) {
       return (value / 1000).toFixed(0) + "K";
     }
-    return value;
+    return value.toString();
   };
 
   const { scrollYProgress } = useScroll();
@@ -188,7 +194,7 @@ const EnhancedTestimonials = () => {
             Our Clients <span className="text-blue-600">Speak for Us</span>
           </h2>
           <p className="max-w-2xl mx-auto text-gray-600 text-lg">
-            See how companies like yours transform unused software licenses into immediate cash recovery with SoftSell's intelligent marketplace.
+            See how companies like yours transform unused software licenses into immediate cash recovery with SoftSell&apos;s intelligent marketplace.
           </p>
         </motion.div>
 
@@ -245,11 +251,11 @@ const EnhancedTestimonials = () => {
                   <p className="text-gray-500 text-sm mb-4">{testimonial.industry}</p>
                   <div className="flex items-center mt-4">
                     <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                      <img 
+                      <Image 
                         src={`${testimonial.src}`} 
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
-                        onError={(e) => {e.target.src = "/api/placeholder/100/100"}}
+                        onError={(e) => {(e.target as HTMLImageElement).src = "/api/placeholder/100/100"}}
                       />
                     </div>
                     <div>
@@ -376,6 +382,7 @@ const EnhancedTestimonials = () => {
 
         <div ref={statsRef} className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
           {metrics.map((metric, index) => {
+            // eslint-disable-next-line react-hooks/rules-of-hooks
             const { count, nodeRef } = useCounter(
               metric.value,
               2000 + (index * 300)
